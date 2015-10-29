@@ -231,10 +231,10 @@ var client = new Keen({
 });
 
 Keen.ready(function() {
-  var savedQuery = client.savedQuery();
+  var savedQueries = client.savedQueries();
 
   // Get all saved queries in a project
-  savedQuery.all(function(err, res) {
+  savedQueries.all(function(err, res) {
     if (err) {
       // there was an error
     }
@@ -244,7 +244,7 @@ Keen.ready(function() {
   });
 
   // Get individual saved query by name
-  savedQuery.get("saved-query-name", function(err, res) {
+  savedQueries.get("saved-query-name", function(err, res) {
     if (err) {
       // there was an error
     }
@@ -254,7 +254,7 @@ Keen.ready(function() {
   });
 
   // Create a new saved query
-  savedQuery.create("saved-query-name",
+  savedQueries.create("saved-query-name",
     {
       refresh_rate: 0,
       query: { ... },
@@ -274,7 +274,7 @@ Keen.ready(function() {
   );
 
   // Update an existing saved query
-  savedQuery.update("saved-query-name",
+  savedQueries.update("saved-query-name",
     { refresh_rate: 86400 },
     function(err, res) {
       if (err) {
@@ -287,7 +287,7 @@ Keen.ready(function() {
   );
 
   // Delete an existing saved query
-  savedQuery.destroy("saved-query-name", function(err, res) {
+  savedQueries.destroy("saved-query-name", function(err, res) {
     if (err) {
       // there was an error
     }

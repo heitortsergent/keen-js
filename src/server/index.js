@@ -10,7 +10,7 @@ extend(Keen.prototype, {
   "put"                 : require("../core/lib/post"),
   "run"                 : require("../core/lib/run"),
   "setGlobalProperties" : require("../core/lib/setGlobalProperties"),
-  "savedQuery"          : require("../core/saved-query")
+  "savedQueries"        : require("../core/saved-queries")
 });
 
 Keen.Query = require("../core/query");

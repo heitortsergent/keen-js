@@ -5,7 +5,7 @@ var Keen = require("../../../../src/server");
 var keenHelper = require("../../helpers/test-config");
 var mock = require("../../helpers/mockServerRequests");
 
-describe("<Client>.savedQuery", function() {
+describe("<Client>.savedQueries", function() {
   beforeEach(function() {
     this.client = new Keen({
       projectId: keenHelper.projectId,
@@ -27,7 +27,7 @@ describe("<Client>.savedQuery", function() {
       ];
       mock.get("/queries/saved", 200, JSON2.stringify(savedQueriesResponse));
 
-      this.client.savedQuery().all(function(err, res) {
+      this.client.savedQueries().all(function(err, res) {
         expect(res).to.deep.equal(savedQueriesResponse);
         done();
       });
@@ -36,11 +36,11 @@ describe("<Client>.savedQuery", function() {
 
   describe("#get", function() {
     it("returns a response when successful", function(done) {
-      var savedQueryResponse = { query_name: "page-visit-count" };
-      mock.get("/queries/saved/page-visit-count", 200, JSON2.stringify(savedQueryResponse));
+      var savedQueriesResponse = { query_name: "page-visit-count" };
+      mock.get("/queries/saved/page-visit-count", 200, JSON2.stringify(savedQueriesResponse));
 
-      this.client.savedQuery().get("page-visit-count", function(err, res) {
-        expect(res).to.deep.equal(savedQueryResponse);
+      this.client.savedQueries().get("page-visit-count", function(err, res) {
+        expect(res).to.deep.equal(savedQueriesResponse);
         done();
       });
     });
@@ -51,7 +51,7 @@ describe("<Client>.savedQuery", function() {
       var updatedQueryResponse = { query_name: "page-visit-counts" };
       mock.put("/queries/saved/page-visit-count", 200, JSON2.stringify(updatedQueryResponse));
 
-      this.client.savedQuery().update("page-visit-count", updatedQueryResponse, function(err, res) {
+      this.client.savedQueries().update("page-visit-count", updatedQueryResponse, function(err, res) {
         expect(res).to.deep.equal(updatedQueryResponse);
         done();
       });
@@ -63,7 +63,7 @@ describe("<Client>.savedQuery", function() {
       var createdQueryResponse = { query_name: "page-visit-counts" };
       mock.put("/queries/saved/page-visit-count", 201, JSON2.stringify(createdQueryResponse));
 
-      this.client.savedQuery().create("page-visit-count", createdQueryResponse, function(err, res) {
+      this.client.savedQueries().create("page-visit-count", createdQueryResponse, function(err, res) {
         expect(res).to.deep.equal(createdQueryResponse);
         done();
       });
@@ -74,7 +74,7 @@ describe("<Client>.savedQuery", function() {
     it("returns a response when successful", function(done) {
       mock.del("/queries/saved/page-visit-count", 204, "");
 
-      this.client.savedQuery().destroy("page-visit-count", function(err, res) {
+      this.client.savedQueries().destroy("page-visit-count", function(err, res) {
         expect(res).to.be.empty()
         done();
       });

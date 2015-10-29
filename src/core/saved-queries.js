@@ -1,7 +1,7 @@
 var request = require('superagent');
 var responseHandler = require('./helpers/superagent-handle-response');
 
-function savedQuery() {
+function savedQueries() {
   var _this = this;
   this.all = function(callback) {
     var url = _this.url('/queries/saved');
@@ -69,4 +69,4 @@ function savedQuery() {
   return this;
 }
 
-module.exports = savedQuery;
+module.exports = savedQueries;
