@@ -219,7 +219,41 @@ Read more about advanced queries in our [query guide](./docs/query.md).
 
 ## Saved Queries
 
-There are multiple ways to interact with the saved queries API.
+Results for a single saved query can also be retrieved and/or visualized by passing the saved query name into `client.run("saved-query-name", callback)` and `client.draw("saved-query-name", el, configuration)`:
+
+```javascript
+// Create a client instance
+var client = new Keen({
+  projectId: "YOUR_PROJECT_ID",
+  readKey: "YOUR_READ_KEY"
+});
+
+Keen.ready(function() {
+  // Retrieve the result of a saved query
+  client.run("saved-query-name", function(err, res) {
+    if (err) {
+      // there was an error
+    }
+    else {
+      // query results are returned here
+    }
+  });
+
+  // Visualize the result of a saved query
+  var el = document.getElementById("chart-wrapper");
+  client.draw("saved-query-name", el, {
+    // Optional chart configuration
+  });
+});
+```
+
+Saved Queries can also be accessed and managed with the `client.savedQueries()` method, which contains CRUD actions for interacting with the saved queries API resource.
+
+* `.all(callback)`: Return all saved queries for the given project
+* `.get("saved-query-name", callback)`: Return a single saved query by name
+* `.create("saved-query-name", configuration, callback)`: Create a new saved query of a given name
+* `.update("saved-query-name", configuration, callback)`: Update a saved query of a given name
+* `.destroy("saved-query-name", callback)`: Destroy a saved query of a given name
 
 ### Example Usage
 
@@ -231,10 +265,10 @@ var client = new Keen({
 });
 
 Keen.ready(function() {
-  var savedQuery = client.savedQuery();
+  var savedQueries = client.savedQueries();
 
   // Get all saved queries in a project
-  savedQuery.all(function(err, res) {
+  savedQueries.all(function(err, res) {
     if (err) {
       // there was an error
     }
@@ -244,7 +278,7 @@ Keen.ready(function() {
   });
 
   // Get individual saved query by name
-  savedQuery.get("saved-query-name", function(err, res) {
+  savedQueries.get("saved-query-name", function(err, res) {
     if (err) {
       // there was an error
     }
@@ -254,11 +288,11 @@ Keen.ready(function() {
   });
 
   // Create a new saved query
-  savedQuery.create("saved-query-name",
+  savedQueries.create("saved-query-name",
     {
       refresh_rate: 0,
       query: { ... },
-      metadata: { 
+      metadata: {
         display_name: "saved query name",
         ...
       }
@@ -274,7 +308,7 @@ Keen.ready(function() {
   );
 
   // Update an existing saved query
-  savedQuery.update("saved-query-name",
+  savedQueries.update("saved-query-name",
     { refresh_rate: 86400 },
     function(err, res) {
       if (err) {
@@ -287,7 +321,7 @@ Keen.ready(function() {
   );
 
   // Delete an existing saved query
-  savedQuery.destroy("saved-query-name", function(err, res) {
+  savedQueries.destroy("saved-query-name", function(err, res) {
     if (err) {
       // there was an error
     }
@@ -298,26 +332,6 @@ Keen.ready(function() {
 });
 ```
 
-If you only want to see the query results of a saved query, you can use `client.run` by passing in the query name.
-
-```javascript
-// Create a client instance
-var client = new Keen({
-  projectId: "YOUR_PROJECT_ID",
-  readKey: "YOUR_READ_KEY"
-});
-
-Keen.ready(function() {
-  client.run("your-saved-query-id-here", function(err, res) {
-    if (err) {
-      // there was an error
-    }
-    else {
-      // query results are returned here
-    }
-  });
-});
-```
 
 
 ## Visualization
@@ -391,9 +405,9 @@ The aim is to build up this module to completely represent the API provided by K
 
 ## Resources
 
-[Data Modeling Guide](https://api.keen.io/3.0/projects/5337e28273f4bb4499000000/events/click?api_key=a0bb828de21e953a675610cb6e6b8935537b19c2f0ac33937d6d1df2cc8fddbf379a81ad398618897b70d15c6b42647c3e063a689bc367f5c32b66c18010541c0ad1cf3dbd36100dc4475c306b238cb6f5b05f082dc4071e35094a722b1f3e29fad63c933ea8e33e8b892c770df5e1bb&data=eyJwYWdlIjogIkRhdGEgTW9kZWxpbmcgR3VpZGUiLCJyZWZlcnJlciI6ICJSRUFETUUubWQifQ==&redirect=https://github.com/keen/data-modeling-guide/)
+[Data Modeling Guide](https://api.keen.io/3.0/projects/5337e28273f4bb4499000000/events/click?api_key=a0bb828de21e953a675610cb6e6b8935537b19c2f0ac33937d6d1df2cc8fddbf379a81ad398618897b70d15c6b42647c3e063a689bc367f5c32b66c18010541c0ad1cf3dbd36100dc4475c306b238cb6f5b05f082dc4071e35094a722b1f3e29fad63c933ea8e33e8b892c770df5e1bb&data=eyJwYWdlIjogIkRhdGEgTW9kZWxpbmcgR3VpZGUiLCJyZWZlcnJlciI6ICJSRUFETUUubWQifQ==&redirect=https://keen.io/guides/data-modeling-guide/)
 
-[API Technical Reference](https://api.keen.io/3.0/projects/5337e28273f4bb4499000000/events/click?api_key=a0bb828de21e953a675610cb6e6b8935537b19c2f0ac33937d6d1df2cc8fddbf379a81ad398618897b70d15c6b42647c3e063a689bc367f5c32b66c18010541c0ad1cf3dbd36100dc4475c306b238cb6f5b05f082dc4071e35094a722b1f3e29fad63c933ea8e33e8b892c770df5e1bb&data=eyJwYWdlIjogIkFQSSBUZWNobmljYWwgUmVmZXJlbmNlIiwicmVmZXJyZXIiOiAiUkVBRE1FLm1kIn0=&redirect=https://keen.io/docs/api/reference/?s=gh_js)
+[API Technical Reference](https://api.keen.io/3.0/projects/5337e28273f4bb4499000000/events/click?api_key=a0bb828de21e953a675610cb6e6b8935537b19c2f0ac33937d6d1df2cc8fddbf379a81ad398618897b70d15c6b42647c3e063a689bc367f5c32b66c18010541c0ad1cf3dbd36100dc4475c306b238cb6f5b05f082dc4071e35094a722b1f3e29fad63c933ea8e33e8b892c770df5e1bb&data=eyJwYWdlIjogIkFQSSBUZWNobmljYWwgUmVmZXJlbmNlIiwicmVmZXJyZXIiOiAiUkVBRE1FLm1kIn0=&redirect=https://keen.io/docs/api/?s=gh_js)
 
 [API Status](https://api.keen.io/3.0/projects/5337e28273f4bb4499000000/events/click?api_key=a0bb828de21e953a675610cb6e6b8935537b19c2f0ac33937d6d1df2cc8fddbf379a81ad398618897b70d15c6b42647c3e063a689bc367f5c32b66c18010541c0ad1cf3dbd36100dc4475c306b238cb6f5b05f082dc4071e35094a722b1f3e29fad63c933ea8e33e8b892c770df5e1bb&data=eyJwYWdlIjogIkFQSSBTdGF0dXMiLCJyZWZlcnJlciI6ICJSRUFETUUubWQifQ==&redirect=http://status.keen.io/?s=gh_js)
 
