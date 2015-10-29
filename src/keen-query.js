@@ -28,7 +28,7 @@
   extend(Keen.prototype, {
     "get"                 : require("./core/lib/get"),
     "run"                 : require("./core/lib/run"),
-    "savedQuery"          : require("./core/saved-query"),
+    "savedQueries"        : require("./core/saved-queries"),
   });
 
   Keen.Query = require("./core/query");
