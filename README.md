@@ -3,6 +3,7 @@
 <!--
 [![Build Status](https://api.travis-ci.org/keen/keen-js.png?branch=master)](https://travis-ci.org/keen/keen-js) [![Selenium Test Status](https://saucelabs.com/buildstatus/keenlabs-js)](https://saucelabs.com/u/keenlabs-js)
 -->
+[ ![Codeship Status for heitortsergent/keen-js](https://app.codeship.com/projects/e55c4470-d09e-0134-8456-1e4f732b90b7/status?branch=master)](https://app.codeship.com/projects/201269)
 
 ## Documentation
 
